@@ -31,8 +31,10 @@ class Category(models.Model):
         ordering =['name']
         verbose_name = 'category'
 
-    def get_absolute_url(self):
-        return reverse('category_list', args=[self.slug])
+    def get_category_url(self):
+        return reverse("core:categoryview", kwargs={
+            'slug': self.slug
+        })
 
     def __str__(self):
         return self.name
@@ -52,6 +54,7 @@ class UserProfile(models.Model):
 class Item(models.Model):
     title = models.CharField(max_length=100)
     price = models.FloatField()
+    featured = models.BooleanField(default=False, blank=True, null=True)
     discount_price = models.FloatField(blank=True, null=True)
     category = models.ForeignKey(Category,on_delete=models.CASCADE, default=1,)
     label = models.CharField(choices=LABEL_CHOICES, max_length=1)
@@ -201,3 +204,4 @@ def userprofile_receiver(sender, instance, created, *args, **kwargs):
 
 
 post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)
+

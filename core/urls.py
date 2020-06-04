@@ -20,7 +20,7 @@ from .views import (
 app_name = 'core'
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='home'),
+    path('', HomeView, name='home'),
     path('shop/', ShopView, name='shop'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('order-summary/', OrderSummaryView.as_view(), name='order-summary'),
@@ -33,7 +33,8 @@ urlpatterns = [
     path('payment/<payment_option>/', PaymentView.as_view(), name='payment'),
     path('request-refund/', RequestRefundView.as_view(), name='request-refund'),
     path('search/', Search, name='search'),
-    path('category/<str:category_slug>/', CategoryView, name='categoryview'),
+    path('category/<slug>/', CategoryView, name='categoryview'),
     path('about/', AboutView, name='about'),
     path('contact/', ContactView, name='contact')
 ]
+

@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
+from django.core.paginator import Paginator
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Category
 from django.db.models import Q
@@ -36,7 +37,7 @@ def is_valid_form(values):
     return valid
 
 
-class CheckoutView(View):
+class CheckoutView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
@@ -344,18 +345,41 @@ class PaymentView(View):
         return redirect("/payment/stripe/")
 
 
-class HomeView(ListView):
-    model = Item
-    paginate_by = 10
-    template_name = "home.html"
+
+
+
+
+def HomeView(request):
+    category_list = Category.objects.all()
+    object_list = Item.objects.all()
+    paginator = Paginator(object_list, 9)  # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+
+    
+    content = {
+        'object_list':object_list,
+        'category_list':category_list,
+        'page_obj': page_obj
+    }
+    return render(request,'home.html',content)
+
 
 
 def ShopView(request):
-    object_list = Item.objects.all()
     category_list = Category.objects.all()
+    object_list = Item.objects.all()
+    paginator = Paginator(object_list, 25)  # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+
+    
     content = {
         'object_list':object_list,
-        'category_list':category_list
+        'category_list':category_list,
+        'page_obj': page_obj
     }
     return render(request,'shop.html',content)
 
@@ -540,12 +564,15 @@ def Search(request):
     else:
         return redirect('/')
 
-def CategoryView(request,category_slug):
+def CategoryView(request,slug):
     instance = Item.objects.all()
     categories = Category.objects.all()
-    if category_slug:
-        category = get_object_or_404(Category, slug=category_slug)
+    if slug:
+        category = get_object_or_404(Category, slug=slug)
         instance_list = instance.filter(category=category)
+        paginator = Paginator(instance_list, 12)
+        page = request.GET.get('page')
+        instance = paginator.get_page(page)
     content = {
         'categories':categories,
         'instance':instance,
@@ -558,4 +585,5 @@ def AboutView(request):
 
 def ContactView(request):
     return render(request, 'contact.html')
+
 

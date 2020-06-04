@@ -25,7 +25,7 @@ SECRET_KEY = 'lyyn2(19s^2-^frpynybngc=$w97-$d7b1-%n*bd5pheo@#*_*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['52.188.123.44']
 
 
 # Application definition
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     'django_countries',
-
+    'sorl.thumbnail',
     'core'
 ]
 MIDDLEWARE = [
@@ -62,7 +62,7 @@ ROOT_URLCONF = 'djecommerce.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/Users/usmanaliyu/Documents/djecommerce/templates'],
+        'DIRS': ['/home/Jane/janesfashion/janesfinal/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,8 +83,12 @@ WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'myproject',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
