@@ -586,4 +586,7 @@ def AboutView(request):
 def ContactView(request):
     return render(request, 'contact.html')
 
+def UserView(request):
+    return render(request,'user.html')
+
 

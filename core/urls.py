@@ -14,7 +14,8 @@ from .views import (
     Search,
     CategoryView,
     AboutView,
-    ContactView
+    ContactView,
+    UserView
 )
 
 app_name = 'core'
@@ -35,6 +36,7 @@ urlpatterns = [
     path('search/', Search, name='search'),
     path('category/<slug>/', CategoryView, name='categoryview'),
     path('about/', AboutView, name='about'),
-    path('contact/', ContactView, name='contact')
+    path('contact/', ContactView, name='contact'),
+    path('user/',UserView, name='user')
 ]
 

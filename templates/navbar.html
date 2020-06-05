@@ -1,6 +1,7 @@
 {% load cart_template_tags %}
 
-<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+<nav class="navbar navbar-expand-lg navbar-light scrolled ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+  
   <div class="container">
     <a class="navbar-brand" href="{% url 'core:home' %}">Jane's Fashion</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav"
@@ -27,7 +28,15 @@
 
         {% if request.user.is_authenticated %}
 
-        <li class="nav-item"><a href="{% url 'account_logout' %}" class="nav-link">Logout</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{request.user}}</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown04">
+            <a class="dropdown-item" href="shop.html">Shop</a>
+            <a class="dropdown-item" href="product-single.html">Single Product</a>
+            <a class="dropdown-item" href="cart.html">Cart</a>
+            <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+          </div>
+        </li>
         {% else %}
         <li class="nav-item"><a href="{% url 'account_login' %}" class="nav-link">Login</a></li>
         {% endif %}

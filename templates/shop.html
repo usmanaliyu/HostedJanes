@@ -6,22 +6,21 @@
 {% load thumbnail %}
 {% block content %}
 
-<div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_6.jpg' %});">
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'images/shopbg.jpg' %}); background-attachment:fixed;">
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
                 <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'core:home' %}">Jane's</a></span> <span>Fashion</span>
                 </p>
                 <h1 class="mb-0 bread">Shop</h1>
+                <form action="/search" method="GET" class="search-form">
+                    <div class="form-group">
+                      <span class="icon ion-ios-search"></span>
+                      <input type="text" class="form-control" name="search_term" placeholder="Type a keyword and hit enter">
+                    </div>
+                  </form>
 
-                <div class="panel-heading" role="tab" id="headingOne">
-
-                    <form action="/search" method="GET">
-                        <input type="text" placeholder="Search.." name="search_term"
-                            class="col-md-12 mt-3 form-group form-field form-control " />
-                    </form>
-
-                </div>
+               
 
             </div>
         </div>
@@ -68,7 +67,10 @@
                                     </p>
 
                                 </div>
-
+                                <p class="bottom-area d-flex px-3">
+                                    <a href="{{ item.get_add_to_cart_url }}" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+                                    
+                                  </p>
 
                             </div>
                         </div>
