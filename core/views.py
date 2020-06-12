@@ -345,26 +345,26 @@ class PaymentView(View):
         return redirect("/payment/stripe/")
 
 
-
-
-
-
 def HomeView(request):
-    category_list = Category.objects.all()
-    object_list = Item.objects.all()
-    paginator = Paginator(object_list, 9)  # Show 25 contacts per page.
+    category_list = Category.objects.all()[:10]
+    object_list = Item.objects.all()[:10]
+    bag_list = Item.objects.filter(category__name='bag')[:10]
+    shoe_list = Item.objects.filter(category__name='shoe')[:10]
+    wear_list = Item.objects.filter(category__name='wear')[:10]
+    paginator = Paginator(object_list, 20)  # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
 
-    
     content = {
-        'object_list':object_list,
-        'category_list':category_list,
-        'page_obj': page_obj
-    }
-    return render(request,'home.html',content)
+        'object_list': object_list,
+        'category_list': category_list,
+        'page_obj': page_obj,
+        'bag_list': bag_list,
+        "shoe_list": shoe_list,
+        "wear_list": wear_list
 
+    }
+    return render(request, 'home.html', content)
 
 
 def ShopView(request):
@@ -373,15 +373,14 @@ def ShopView(request):
     paginator = Paginator(object_list, 25)  # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
 
-    
     content = {
-        'object_list':object_list,
-        'category_list':category_list,
+        'object_list': object_list,
+        'category_list': category_list,
         'page_obj': page_obj
     }
-    return render(request,'shop.html',content)
+    return render(request, 'shop.html', content)
+
 
 class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
@@ -550,21 +549,23 @@ class RequestRefundView(View):
                 messages.info(self.request, "This order does not exist.")
                 return redirect("core:request-refund")
 
+
 def Search(request):
     if request.GET:
         search_term = request.GET['search_term']
-        search_result =Item.objects.filter(
+        search_result = Item.objects.filter(
             Q(title__icontains=search_term)
         )
         context = {
-            'search_term':search_term,
-            'instance':search_result
-            }
-        return render(request,'search.html', context)
+            'search_term': search_term,
+            'instance': search_result
+        }
+        return render(request, 'search.html', context)
     else:
         return redirect('/')
 
-def CategoryView(request,slug):
+
+def CategoryView(request, slug):
     instance = Item.objects.all()
     categories = Category.objects.all()
     if slug:
@@ -574,19 +575,20 @@ def CategoryView(request,slug):
         page = request.GET.get('page')
         instance = paginator.get_page(page)
     content = {
-        'categories':categories,
-        'instance':instance,
-        'category':category
+        'categories': categories,
+        'instance': instance,
+        'category': category
     }
-    return render(request,'categoryview.html',content)
+    return render(request, 'categoryview.html', content)
+
 
 def AboutView(request):
     return render(request, 'about.html')
 
+
 def ContactView(request):
     return render(request, 'contact.html')
 
+
 def UserView(request):
-    return render(request,'user.html')
-
-
+    return render(request, 'user.html')

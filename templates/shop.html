@@ -1,31 +1,90 @@
 {% extends "base.html" %}
 {% load static %}
 {% block head_title %}
+{% load humanize %}
 <title>Shop - Jane's Fashion </title>
 {% endblock %}
 {% load thumbnail %}
 {% block content %}
 
-<div class="hero-wrap hero-bread" style="background-image: url({% static 'images/shopbg.jpg' %}); background-attachment:fixed;">
+<div class="hero-wrap hero-bread"
+    style="background-image: url({% static 'images/shopbg.jpg' %}); background-attachment:fixed;">
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
-            <div class="col-md-9 ftco-animate text-center">
-                <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'core:home' %}">Jane's</a></span> <span>Fashion</span>
+            <div class="col-md-9  text-center">
+                <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'core:home' %}">Jane's</a></span>
+                    <span>Fashion</span>
                 </p>
                 <h1 class="mb-0 bread">Shop</h1>
                 <form action="/search" method="GET" class="search-form">
                     <div class="form-group">
-                      <span class="icon ion-ios-search"></span>
-                      <input type="text" class="form-control" name="search_term" placeholder="Type a keyword and hit enter">
+                        <span class="icon ion-ios-search"></span>
+                        <input type="text" class="form-control" name="search_term"
+                            placeholder="Type a keyword and hit enter">
                     </div>
-                  </form>
+                </form>
 
-               
+
 
             </div>
         </div>
     </div>
 </div>
+<section class="ftco-section ">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-md-3">
+                <a href="#">
+                    <div class="choose-wrap divider-one img p-0 d-flex align-items-end mr-1"
+                        style="background-image: url({% static 'images/key.jpg' %}); backgrount-size: cover; height: 50px;">
+
+                        <div class="text text-center text-white px-2 ">
+
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="#">
+                    <div class="choose-wrap divider-one img p-0 d-flex align-items-end mr-1"
+                        style="background-image: url({% static 'images/key.jpg' %}); backgrount-size: cover; height: 50px;">
+
+                        <div class="text text-center text-white px-2 ">
+
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="#">
+                    <div class="choose-wrap divider-one img p-0 d-flex align-items-end mr-1"
+                        style="background-image: url({% static 'images/key.jpg' %}); backgrount-size: cover; height: 50px;">
+
+                        <div class="text text-center text-white px-2 ">
+
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="#">
+                    <div class="choose-wrap divider-one img p-0 d-flex align-items-end mr-1"
+                        style="background-image: url({% static 'images/key.jpg' %}); backgrount-size: cover; height: 50px;">
+
+                        <div class="text text-center text-white px-2 ">
+
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+        </div>
+    </div>
+    <br><br>
+</section>
 
 <section class="ftco-section bg-light">
     <div class="container">
@@ -34,15 +93,16 @@
                 <div class="row">
 
                     {% for item in object_list %}
-                    <div class="col-sm-12 col-md-12 col-lg-4 ftco-animate d-flex">
+                    <div class="col-sm-12 col-md-12 col-lg-4 d-flex">
                         <div class="product">
-                            
+                            {% thumbnail item.image "250x250" crop="center" as jane %}
                             <a href="{{ item.get_absolute_url }}" class="img-prod"><img class="img-fluid"
-                                    src="{{ item.image.url }}" alt="Jane's Fashion Products">
+                                    src="{{ jane.url }}" alt="Jane's Fashion Products">
                                 <div class="overlay"></div>
                             </a>
-                            
-                            <div class="text py-3 pb-4 px-3">
+                            {% endthumbnail %}
+
+                            <div class="text py-3 pb-2 px-3">
                                 <div class="d-flex">
                                     <div class="cat">
                                         <span>{{ item.get_category_display }}</span>
@@ -60,17 +120,19 @@
                                 <h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
                                 <div class="pricing">
                                     <p class="price"><span>{% if item.discount_price %}
-                                            &#8358;  {{ item.discount_price }}
+                                            &#8358; {{ item.discount_price|intcomma }}
                                             {% else %}
-                                            &#8358; {{ item.price }}
+                                            &#8358; {{ item.price|intcomma }}
                                             {% endif %}</span>
                                     </p>
 
                                 </div>
                                 <p class="bottom-area d-flex px-3">
-                                    <a href="{{ item.get_add_to_cart_url }}" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
-                                    
-                                  </p>
+                                    <a href="{{ item.get_add_to_cart_url }}"
+                                        class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
+                                                class="ion-ios-add ml-1"></i></span></a>
+
+                                </p>
 
                             </div>
                         </div>
@@ -80,7 +142,7 @@
 
                 </div>
 
-               
+
                 <div class="row mt-5">
                     <div class="col text-center">
                         <div class="block-27">
@@ -91,7 +153,7 @@
                                 {% endif %}
                                 <li class="active"><a
                                         href="?page={{ page_obj.number }}"><span>{{ page_obj.number }}</span></a>
-                                        </li>
+                                </li>
                                 {% if page_obj.has_next %}
                                 <li><a href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
                                 {% endif %}
@@ -99,7 +161,7 @@
                         </div>
                     </div>
                 </div>
-               
+
             </div>
 
             <div class="col-md-4 col-lg-2">
@@ -174,6 +236,36 @@
             </div>
         </div>
     </div>
+</section>
+
+<section class="ftco-section ">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-md-6">
+                <a href="#">
+                    <div class="choose-wrap divider-one img p-0 d-flex align-items-end mr-1"
+                        style="background-image: url({% static 'images/key.jpg' %}); backgrount-size: cover; height: 250px;">
+
+                        <div class="text text-center text-white px-2 ">
+
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div class="col-md-6">
+                <div class="choose-wrap full-wrap img align-self-stretch d-flex align-item-center justify-content-end"
+                    style="background-image: url({% static 'images/shoe_art.jpg' %}); height: 250px; width:100%; backgrount-size:
+          cover;">
+                    <div class="col-md-7 d-flex align-items-center">
+                        <div class="text text-white ">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
 </section>
 
 {% endblock %}
