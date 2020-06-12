@@ -22,7 +22,7 @@ class OrderAdmin(admin.ModelAdmin):
                     'billing_address',
                     'payment',
                     'coupon',
-                    
+
                     ]
     list_display_links = [
         'user',
@@ -56,11 +56,14 @@ class AddressAdmin(admin.ModelAdmin):
     list_filter = ['default', 'address_type', 'country']
     search_fields = ['user', 'street_address', 'apartment_address', 'zip']
 
+
 class ItemAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug':('title',)}
+    prepopulated_fields = {'slug': ('title',)}
+
 
 class CategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug':('name',)}
+    prepopulated_fields = {'slug': ('name',)}
+
 
 class OrderItemAdmin(admin.ModelAdmin):
     list_display = [
@@ -69,18 +72,19 @@ class OrderItemAdmin(admin.ModelAdmin):
         'quantity',
         'item',
 
-        
+
     ]
 
-admin.site.register(Item,ItemAdmin)
-admin.site.register(OrderItem,OrderItemAdmin)
+
+admin.site.register(Item, ItemAdmin)
+admin.site.register(OrderItem, OrderItemAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Payment)
 admin.site.register(Coupon)
 admin.site.register(Refund)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(UserProfile)
-admin.site.register(Category,CategoryAdmin)
+admin.site.register(Category, CategoryAdmin)
 
 admin.site.site_header = "Jane's Admin"
 admin.site.site_text = "Jane's Admin Portal"

@@ -23,13 +23,15 @@ ADDRESS_CHOICES = (
     ('S', 'Shipping'),
 )
 
+
 class Category(models.Model):
     name = models.CharField(max_length=250, blank=True)
     slug = models.SlugField(max_length=250)
 
     class Meta:
-        ordering =['name']
-        verbose_name = 'category'
+        unique_together = ['name', 'slug']
+        ordering = ['name']
+        verbose_name_plural = 'categories'
 
     def get_category_url(self):
         return reverse("core:categoryview", kwargs={
@@ -38,7 +40,6 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-
 
 
 class UserProfile(models.Model):
@@ -56,7 +57,8 @@ class Item(models.Model):
     price = models.FloatField()
     featured = models.BooleanField(default=False, blank=True, null=True)
     discount_price = models.FloatField(blank=True, null=True)
-    category = models.ForeignKey(Category,on_delete=models.CASCADE, default=1,)
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, default=1,)
     label = models.CharField(choices=LABEL_CHOICES, max_length=1)
     slug = models.SlugField()
     description = models.TextField()
@@ -64,6 +66,9 @@ class Item(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        unique_together = ['title', 'slug']
 
     def get_absolute_url(self):
         return reverse("core:product", kwargs={
@@ -204,4 +209,3 @@ def userprofile_receiver(sender, instance, created, *args, **kwargs):
 
 
 post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)
-

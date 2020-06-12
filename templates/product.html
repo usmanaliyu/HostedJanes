@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block head_title %}
+{% load humanize %}
 <title> {{ object.title }} - Jane's Fashion </title>
 {% endblock %}
 {% block content %}
@@ -9,8 +10,8 @@
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-center">
       <div class="col-md-9 ftco-animate text-center">
-        <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'core:home' %}">Janes</a></span>'s <span class="mr-2"><a
-              href="{% url 'core:shop' %}">Fashion</a></span></p>
+        <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'core:home' %}">Janes</a></span>'s <span
+            class="mr-2"><a href="{% url 'core:shop' %}">Fashion</a></span></p>
         <h1 class="mb-0 bread mt-3">{{ object.title }}</h1>
       </div>
     </div>
@@ -42,7 +43,9 @@
             <a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
           </p>
         </div>
-        <p class="price"><span>&#8358; {{ object.price }}</span></p>
+
+        <p class="price"><span><del>&#8358; {{ object.discount_price|intcomma }}</del></span></p>
+        <p class="price"><span>&#8358; {{ object.price|intcomma }}</span></p>
         <p>{{ object.description }}
         </p>
         <div class="row mt-4">
@@ -60,8 +63,8 @@
             </div>
           </div>
           <div class="w-100"></div>
-          
-          
+
+
 
           <div class="w-100"></div>
           <div class="col-md-12">
@@ -71,15 +74,15 @@
         <p><a href="{{ object.get_add_to_cart_url }}" class="btn btn-black py-3 px-5 mr-2">Add to Cart</a></p>
       </div>
     </div>
-  
+
 
 
 
     <div class="row mt-5">
       <div class="col-md-12 nav-link-wrap">
         <div class="nav nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-          <a class="nav-link ftco-animate active mr-lg-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1"
-            role="tab" aria-controls="v-pills-1" aria-selected="true">Reviews</a>
+          <a class="nav-link active mr-lg-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab"
+            aria-controls="v-pills-1" aria-selected="true">Reviews</a>
 
         </div>
       </div>
@@ -87,13 +90,14 @@
 
         <div class="tab-content bg-light" id="v-pills-tabContent">
 
-          <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab v-pills-day-3-tab">
-           
-         
-          <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-day-3-tab"></div>
+          <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel"
+            aria-labelledby="day-1-tab v-pills-day-3-tab">
+
+
+            <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-day-3-tab"></div>
             <div class="row p-4">
-              <div class="col-md-7">
-                <h3 class="mb-4">23 Reviews</h3>
+              <div class="col-md-6">
+                <h3 class="mb-1">23 Reviews</h3>
                 <div class="review">
                   <div class="user-img" style="background-image: url({{ object.image.url }}"></div>
                   <div class="desc">
@@ -128,20 +132,22 @@
                   <div class="">
                     <div class="order-md-last d-flex">
                       <form action="#" class=" p-5 contact-form">
-                        
+
                         <div class="form-group">
-                          <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Review"></textarea>
+                          <textarea name="" id="" cols="50" rows="15" class="form-control"
+                            placeholder="Review"></textarea>
                         </div>
                         <div class="form-group">
                           <input type="submit" value="Add Review" class="btn btn-primary py-3 px-5">
                         </div>
                       </form>
-                    
+
                     </div>
 
 
 
 
+                  </div>
                 </div>
               </div>
             </div>
@@ -149,7 +155,6 @@
         </div>
       </div>
     </div>
-  </div>
 </section>
 {% block script %}
 <script>

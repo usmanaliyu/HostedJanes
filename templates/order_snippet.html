@@ -1,3 +1,5 @@
+{% load humanize %}
+
 <div class="row mt-5 pt-3 d-flex">
     <div class="col-md-6 d-flex">
         <div class="cart-detail cart-total bg-light p-3 p-md-4">
@@ -6,7 +8,7 @@
             {% for order_item in order.items.all %}
             <p class="d-flex">
                 <span>{{ order_item.quantity }} x {{ order_item.item.title}}</span>
-                <span>&#8358; {{ order_item.get_final_price }}</span>
+                <span>&#8358; {{ order_item.get_final_price|intcomma }}</span>
             </p>
             {% endfor %}
 
@@ -24,11 +26,11 @@
             <hr>
             <p class="d-flex total-price">
                 <span>Total</span>
-                <span>&#8358; {{ order.get_total }}</span>
+                <span>&#8358; {{ order.get_total|intcomma }}</span>
             </p>
 
             {% if DISPLAY_COUPON_FORM %}
-            
+
             <form class="card p-2" action="{% url 'core:add-coupon' %}" method="POST">
                 {% csrf_token %}
                 <div class="input-group">

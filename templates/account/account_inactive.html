@@ -2,10 +2,23 @@
 
 {% load i18n %}
 
-{% block head_title %}{% trans "Account Inactive" %}{% endblock %}
+{% block head_title %}
+
+<title>{% trans "Account Inactive" %}</title>{% endblock %}
 
 {% block content %}
-<h1>{% trans "Account Inactive" %}</h1>
+<main>
+    <section class="ftco-section contact-section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class='col-md-6 mx-auto mb-4'>
+                    <h1>{% trans "Account Inactive" %}</h1>
 
-<p>{% trans "This account is inactive." %}</p>
+                    <p>{% trans "This account is inactive." %}</p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
 {% endblock %}
