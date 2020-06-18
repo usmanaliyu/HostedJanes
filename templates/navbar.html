@@ -1,14 +1,21 @@
 {% load cart_template_tags %}
 
 
-<nav class="navbar navbar-expand-lg navbar-light scrolled ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+<nav class="navbar navbar-expand-lg ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 
   <div class="container">
-    <a class="navbar-brand" href="{% url 'core:home' %}">Jane's Fashion</a>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav"
       aria-expanded="false" aria-label="Toggle navigation">
-      <span class="oi oi-menu"></span> Menu
+      <span class="text-white oi oi-menu"></span>
     </button>
+    <a class="text-center navbar-brand" href="{% url 'core:home' %}">Jane's Fashion</a>
+    <span class="nav-item mobile-cart cta cta-colored"><a href="{% url 'core:order-summary' %}"
+        class="text-white nav-link">
+        <span class="text-white icon-shopping_cart"></span>
+        {{ request.user|cart_item_count }}
+      </a></span>
+
 
 
 
@@ -23,7 +30,7 @@
 
         <li class="nav-item cta cta-colored"><a href="{% url 'core:order-summary' %}" class="nav-link">
             <span class="icon-shopping_cart"></span>
-            Cart {{ request.user|cart_item_count }}
+            {{ request.user|cart_item_count }}
           </a></li>
 
 

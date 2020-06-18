@@ -5,13 +5,14 @@
 {% endblock %}
 
 {% block content %}
-<div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_6.jpg'%});">
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'images/header.jpg'%});">
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
-            <div class="col-md-9text-center">
-                <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'core:home' %}">Home</a></span>
-                    <span>About</span></p>
-                <h1 class="mb-0 bread">About Us</h1>
+            <div class="col-md-9 text-white text-center">
+                <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'core:home' %}"
+                            class="text-white">Home</a></span>
+                    <span class="text-white">About</span></p>
+                <h1 class="mb-5 text-white bread">About Us</h1>
             </div>
         </div>
     </div>

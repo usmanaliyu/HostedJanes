@@ -1,6 +1,20 @@
 from django.contrib import admin
 
-from .models import Item, OrderItem, Order, Payment, Coupon, Refund, Address, UserProfile, Category
+from .models import (
+    Item,
+    OrderItem,
+    Order,
+    Payment,
+    Coupon,
+    Refund,
+    Address,
+    UserProfile,
+    Category,
+    HomepageBanner,
+    HomesideBanner,
+    ShoptopBanner,
+    ShopbottomBanner
+)
 
 
 def make_refund_accepted(modeladmin, request, queryset):
@@ -85,6 +99,11 @@ admin.site.register(Refund)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(UserProfile)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(HomepageBanner)
+admin.site.register(HomesideBanner)
+admin.site.register(ShoptopBanner)
+admin.site.register(ShopbottomBanner)
+
 
 admin.site.site_header = "Jane's Admin"
 admin.site.site_text = "Jane's Admin Portal"

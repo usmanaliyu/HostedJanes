@@ -168,9 +168,34 @@
   </form><!-- END -->
 </section> <!-- .section -->
 
+
+<section class="ftco-section ">
+  <div class="container">
+    <div class="row no-gutters">
+      {% for item in shoptop %}
+      <div class="col-md-6 pb-2 pr-1">
+        <a href="#">
+
+          <img src="{{item.image.url}}" style="width:100%; height: 250px;"
+            lass="choose-wrap divider-one  img-fluid mb-3 d-flex align-items-end" alt="">
+
+          <div class="text text-center text-white px-2 ">
+
+
+          </div>
+
+        </a>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+  <br><br>
+</section>
 {% endblock content %}
 
 {% block extra_scripts %}
+
 <script>
   var hideable_shipping_form = $('.hideable_shipping_form');
   var hideable_billing_form = $('.hideable_billing_form');

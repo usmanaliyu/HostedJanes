@@ -9,7 +9,21 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.core.paginator import Paginator
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm
-from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Category
+from .models import (
+    Item,
+    OrderItem,
+    Order,
+    Address,
+    Payment,
+    Coupon,
+    Refund,
+    UserProfile,
+    Category,
+    HomepageBanner,
+    HomesideBanner,
+    ShoptopBanner,
+    ShopbottomBanner
+)
 from django.db.models import Q
 
 import random
@@ -23,8 +37,12 @@ def create_ref_code():
 
 
 def products(request):
+    items = Item.objects.all()
+    shoptop = ShoptopBanner.objects.all()[:2]
     context = {
-        'items': Item.objects.all()
+        'items': items,
+        "shoptop": shoptop
+
     }
     return render(request, "products.html", context)
 
@@ -40,6 +58,7 @@ def is_valid_form(values):
 class CheckoutView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
+
             order = Order.objects.get(user=self.request.user, ordered=False)
             form = CheckoutForm()
             context = {
@@ -351,6 +370,9 @@ def HomeView(request):
     bag_list = Item.objects.filter(category__name='bag')[:10]
     shoe_list = Item.objects.filter(category__name='shoe')[:10]
     wear_list = Item.objects.filter(category__name='wear')[:10]
+    access_list = Item.objects.filter(category__name='accessories')[:10]
+    hometop = HomepageBanner.objects.all()[:2]
+    homeside = HomesideBanner.objects.all()[:2]
     paginator = Paginator(object_list, 20)  # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -361,7 +383,10 @@ def HomeView(request):
         'page_obj': page_obj,
         'bag_list': bag_list,
         "shoe_list": shoe_list,
-        "wear_list": wear_list
+        "wear_list": wear_list,
+        "access_list": access_list,
+        "hometop": hometop,
+        "homeside": homeside
 
     }
     return render(request, 'home.html', content)
@@ -370,6 +395,8 @@ def HomeView(request):
 def ShopView(request):
     category_list = Category.objects.all()
     object_list = Item.objects.all()
+    shoptop = ShoptopBanner.objects.all()[:4]
+    shopside = ShopbottomBanner.objects.all()[:2]
     paginator = Paginator(object_list, 25)  # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -377,7 +404,10 @@ def ShopView(request):
     content = {
         'object_list': object_list,
         'category_list': category_list,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        "shoptop": shoptop,
+        "shopside": shopside
+
     }
     return render(request, 'shop.html', content)
 
@@ -385,9 +415,11 @@ def ShopView(request):
 class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
+            shoptop = ShoptopBanner.objects.all()[:2]
             order = Order.objects.get(user=self.request.user, ordered=False)
             context = {
-                'object': order
+                'object': order,
+                "shoptop": shoptop
             }
             return render(self.request, 'order_summary.html', context)
         except ObjectDoesNotExist:
@@ -568,16 +600,23 @@ def Search(request):
 def CategoryView(request, slug):
     instance = Item.objects.all()
     categories = Category.objects.all()
+
     if slug:
         category = get_object_or_404(Category, slug=slug)
         instance_list = instance.filter(category=category)
         paginator = Paginator(instance_list, 12)
         page = request.GET.get('page')
         instance = paginator.get_page(page)
+        shoptop = ShoptopBanner.objects.all()[:4]
+        shopside = ShopbottomBanner.objects.all()[:2]
     content = {
         'categories': categories,
         'instance': instance,
-        'category': category
+        'category': category,
+        "shoptop": shoptop,
+        "shopside": shopside
+
+
     }
     return render(request, 'categoryview.html', content)
 

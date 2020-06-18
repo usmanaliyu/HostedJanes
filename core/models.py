@@ -41,6 +41,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def get_category_count(self):
+        return self.item_set.all().count()
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(
@@ -209,3 +213,43 @@ def userprofile_receiver(sender, instance, created, *args, **kwargs):
 
 
 post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)
+
+
+class Slider(models.Model):
+    title = models.CharField(max_length=100)
+    image = models.ImageField()
+
+    def __str__(self):
+        return self.title
+
+
+class HomepageBanner(models.Model):
+    image = models.ImageField()
+    link = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Image"
+
+
+class HomesideBanner(models.Model):
+    image = models.ImageField()
+    link = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Image"
+
+
+class ShoptopBanner(models.Model):
+    image = models.ImageField()
+    link = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Image"
+
+
+class ShopbottomBanner(models.Model):
+    image = models.ImageField()
+    link = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Image"
