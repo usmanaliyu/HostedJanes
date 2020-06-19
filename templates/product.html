@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block head_title %}
+{% load crispy_forms_tags %}
 {% load humanize %}
 <title> {{ object.title }} - Jane's Fashion </title>
 {% endblock %}
@@ -101,18 +102,19 @@
             <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-day-3-tab"></div>
             <div class="row p-4">
               <div class="col-md-6">
-                <h3 class="mb-1">23 Reviews</h3>
+                <h3 class="mb-1">{{object.get_review_count}} Reviews</h3>
                 <div class="review">
                   <div class="user-img" style="background-image: url({{ object.image.url }}"></div>
+                  {% for reviews in object.reviews  %}
                   <div class="desc">
                     <h4>
-                      <span class="text-left">Emanuel issa</span>
-                      <span class="text-right">14 March 2019</span>
+                      <span class="text-left">{{reviews.user}}</span>
+                      <span class="text-right">{{reviews.time}}</span>
                     </h4>
 
-                    <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline
-                      of her hometown Bookmarksgrov</p>
+                    <p>{{reviews.review}}</p>
                   </div>
+                  {% endfor %}
                 </div>
 
 
@@ -129,17 +131,17 @@
                       <i class="ion-ios-star-outline"></i>
                       (98%)
                     </span>
-                    <span>20 Reviews</span>
+                    <span>{{object.get_review_count}} Reviews</span>
                   </p>
 
-
+                  {% if request.user.is_authenticated %}
                   <div class="col-md-12">
                     <div class="col-md-12">
-                      <form action="#" class=" p-5 contact-form">
+                      <form method="POST" class=" p-5 contact-form">
 
                         <div class="form-group">
-                          <textarea cols="70" style='resize:none;' rows="15" class="form-control"
-                            placeholder="Review"></textarea>
+                          {% csrf_token %}
+                          {{form|crispy}}
                         </div>
                         <div class="form-group">
                           <input type="submit" value="Add Review" class="btn btn-primary py-3 px-5">
@@ -147,11 +149,13 @@
                       </form>
 
                     </div>
+                    {% else %}
 
-
+                    <a class="btn btn-primary btn-block" href="{% url 'account_login' %}">Login To Review</a>
 
 
                   </div>
+                  {% endif %}
                 </div>
               </div>
             </div>

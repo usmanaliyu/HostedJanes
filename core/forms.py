@@ -59,3 +59,12 @@ class PaymentForm(forms.Form):
     stripeToken = forms.CharField(required=False)
     save = forms.BooleanField(required=False)
     use_default = forms.BooleanField(required=False)
+
+
+class ReviewForm(forms.Form):
+    review = forms.CharField(required=True, widget=forms.Textarea(attrs={
+        'class': 'form-control',
+        "row": 10,
+        'resize': "none",
+        'label': 'Comment'
+    }))

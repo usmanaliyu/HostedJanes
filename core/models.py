@@ -89,6 +89,14 @@ class Item(models.Model):
             'slug': self.slug
         })
 
+    @property
+    def get_review_count(self):
+        return self.reviews_set.all().count()
+
+    @property
+    def reviews(self):
+        return self.reviews_set.all()
+
 
 class OrderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -253,3 +261,17 @@ class ShopbottomBanner(models.Model):
 
     def __str__(self):
         return f"Image"
+
+
+class Reviews(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    review = models.TextField()
+    time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name_plural = 'Reviews'

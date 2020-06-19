@@ -13,7 +13,8 @@ from .models import (
     HomepageBanner,
     HomesideBanner,
     ShoptopBanner,
-    ShopbottomBanner
+    ShopbottomBanner,
+    Reviews
 )
 
 
@@ -103,6 +104,7 @@ admin.site.register(HomepageBanner)
 admin.site.register(HomesideBanner)
 admin.site.register(ShoptopBanner)
 admin.site.register(ShopbottomBanner)
+admin.site.register(Reviews)
 
 
 admin.site.site_header = "Jane's Admin"

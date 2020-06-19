@@ -36,10 +36,11 @@
 
         {% if request.user.is_authenticated %}
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false"> <span class="icon-user"></span> Hi {{request.user}}</a>
-          <div class="dropdown-menu" aria-labelledby="dropdown04">
+
+        <li class="nav-item dropdown show">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="false"
+            aria-expanded="true"> <span class="icon-user"></span> Hi {{request.user}}</a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <a class="dropdown-item" href="shop.html">About Us</a>
             <a class="dropdown-item" href="product-single.html">Contact Us</a>
             <a class="dropdown-item" href="cart.html">Cart</a>

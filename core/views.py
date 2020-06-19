@@ -8,7 +8,7 @@ from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.core.paginator import Paginator
-from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm
+from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, ReviewForm
 from .models import (
     Item,
     OrderItem,
@@ -22,7 +22,8 @@ from .models import (
     HomepageBanner,
     HomesideBanner,
     ShoptopBanner,
-    ShopbottomBanner
+    ShopbottomBanner,
+    Reviews
 )
 from django.db.models import Q
 
@@ -430,6 +431,30 @@ class OrderSummaryView(LoginRequiredMixin, View):
 class ItemDetailView(DetailView):
     model = Item
     template_name = "product.html"
+
+    def post(self, *args, **kwargs):
+        form = ReviewForm(self.request.POST or None)
+        if form.is_valid():
+            user = self.request.user
+            item = self.get_object()
+            review = form.cleaned_data.get('review')
+
+            reviewmode = Reviews(
+                user=user,
+                item=item,
+                review=review
+
+            )
+            reviewmode.save()
+            return redirect('core:product', slug=item.slug)
+        return redirect('core:product', slug=self.get_object().slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'form': ReviewForm()
+        })
+        return context
 
 
 @login_required
