@@ -93,7 +93,8 @@
 
         <div class="product d-flex flex-column">
           {%  thumbnail item.image '200x200' crop="center" as jane %}
-          <a href="#" class="img-prod"><img class="img-fluid" src="{{ jane.url }}" alt="Colorlib Template">
+          <a href="{{item.get_absolute_url}}" class="img-prod"><img class="img-fluid" src="{{ jane.url }}"
+              alt="Colorlib Template">
             {% endthumbnail %}
             <div class="overlay"></div>
           </a>
@@ -112,7 +113,7 @@
                 </p>
               </div>
             </div>
-            <h3><a href="#">{{item.title }}</a></h3>
+            <h3><a href="{{item.get_absolute_url}}">{{item.title }}</a></h3>
             <div class="pricing">
               <p class="price"><del>&#8358; {{item.discount_price|intcomma}}</del></p>
               <p class="price"><span>&#8358; {{item.price|intcomma}}</span></p>
@@ -147,7 +148,8 @@
 
         <div class="product d-flex flex-column">
           {%  thumbnail item.image '200x200' crop="center" as jane %}
-          <a href="#" class="img-prod"><img class="img-fluid" src="{{ jane.url }}" alt="Colorlib Template">
+          <a href="{{item.get_absolute_url}}" class="img-prod"><img class="img-fluid" src="{{ jane.url }}"
+              alt="Colorlib Template">
             {% endthumbnail %}
             <div class="overlay"></div>
           </a>
@@ -166,7 +168,7 @@
                 </p>
               </div>
             </div>
-            <h3><a href="#">{{item.title }}</a></h3>
+            <h3><a href="{{item.get_absolute_url}}">{{item.title }}</a></h3>
             <div class="pricing">
               <p class="price"><del>&#8358; {{item.discount_price|intcomma}}</del></p>
               <p class="price"><span>&#8358; {{item.price|intcomma}}</span></p>
@@ -224,7 +226,8 @@
 
         <div class="product d-flex flex-column">
           {%  thumbnail item.image '200x200' crop="center" as jane %}
-          <a href="#" class="img-prod"><img class="img-fluid" src="{{ jane.url }}" alt="Colorlib Template">
+          <a href="{{item.get_absolute_url}}" class="img-prod"><img class="img-fluid" src="{{ jane.url }}"
+              alt="Colorlib Template">
             {% endthumbnail %}
             <div class="overlay"></div>
           </a>
@@ -243,7 +246,7 @@
                 </p>
               </div>
             </div>
-            <h3><a href="#">{{item.title }}</a></h3>
+            <h3><a href="{{item.get_absolute_url}}">{{item.title }}</a></h3>
             <div class="pricing">
               <p class="price"><del>&#8358; {{item.discount_price|intcomma}}</del></p>
               <p class="price"><span>&#8358; {{item.price|intcomma}}</span></p>
@@ -276,7 +279,8 @@
 
         <div class="product d-flex flex-column">
           {%  thumbnail item.image '200x200' crop="center" as jane %}
-          <a href="#" class="img-prod"><img class="img-fluid" src="{{ jane.url }}" alt="Colorlib Template">
+          <a href="{{item.get_absolute_url}}" class="img-prod"><img class="img-fluid" src="{{ jane.url }}"
+              alt="Colorlib Template">
             {% endthumbnail %}
             <div class="overlay"></div>
           </a>
@@ -295,7 +299,7 @@
                 </p>
               </div>
             </div>
-            <h3><a href="#">{{item.title }}</a></h3>
+            <h3><a href="{{item.get_absolute_url}}">{{item.title }}</a></h3>
             <div class="pricing">
               <p class="price"><del>&#8358; {{item.discount_price|intcomma}}</del></p>
               <p class="price"><span>&#8358; {{item.price|intcomma}}</span></p>

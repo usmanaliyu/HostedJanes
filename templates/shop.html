@@ -36,7 +36,7 @@
         <div class="row no-gutters">
             {% for item in shoptop %}
             <div class="col-md-3">
-                <a href="#">
+                <a href="{{item.link}}">
                     <img src="" alt="">
                     <div class="choose-wrap divider-one img p-0 d-flex align-items-end mr-1"
                         style="background-image: url({{item.image.url}}); backgrount-size: cover; height: 100px;">
@@ -152,7 +152,7 @@
                                         aria-labelledby="headingOne">
                                         <div class="panel-body">
                                             <ul>
-                                                <li><a href="#">Sport</a></li>
+                                                <!-- <li><a href="#">Sport</a></li> -->
 
                                             </ul>
                                         </div>
