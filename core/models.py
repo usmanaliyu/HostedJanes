@@ -187,7 +187,7 @@ class Address(models.Model):
 
 
 class Payment(models.Model):
-    stripe_charge_id = models.CharField(max_length=50)
+    reference = models.CharField(max_length=50)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.SET_NULL, blank=True, null=True)
     amount = models.FloatField()
@@ -275,3 +275,14 @@ class Reviews(models.Model):
 
     class Meta:
         verbose_name_plural = 'Reviews'
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=30)
+    email = models.EmailField()
+    subject = models.CharField(max_length=30)
+    message = models.TextField(max_length=300)
+    time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

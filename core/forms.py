@@ -5,7 +5,7 @@ from django_countries.widgets import CountrySelectWidget
 
 PAYMENT_CHOICES = (
     ('S', 'Stripe'),
-    ('P', 'PayPal')
+    ('P', 'Paystack')
 )
 
 
@@ -67,4 +67,24 @@ class ReviewForm(forms.Form):
         "row": 10,
         'resize': "none",
         'label': 'Comment'
+    }))
+
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=30, required=True, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Your Name'
+    }))
+    email = forms.EmailField(max_length=30, required=True, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Email'
+    }))
+    subject = forms.CharField(max_length=30, required=True, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Subject'
+    }))
+    message = forms.CharField(max_length=300, required=True, widget=forms.Textarea(attrs={
+        'class': 'form-control',
+        'placeholder': 'Message',
+        'resize': 'none'
     }))

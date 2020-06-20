@@ -8,7 +8,7 @@ from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.core.paginator import Paginator
-from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, ReviewForm
+from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, ReviewForm, ContactForm
 from .models import (
     Item,
     OrderItem,
@@ -23,7 +23,8 @@ from .models import (
     HomesideBanner,
     ShoptopBanner,
     ShopbottomBanner,
-    Reviews
+    Reviews,
+    Contact
 )
 from django.db.models import Q
 
@@ -164,7 +165,7 @@ class CheckoutView(LoginRequiredMixin, View):
                     order.save()
 
                 elif use_default_billing:
-                    print("Using the defualt billing address")
+                    print("Using the default billing address")
                     address_qs = Address.objects.filter(
                         user=self.request.user,
                         address_type='B',
@@ -217,7 +218,7 @@ class CheckoutView(LoginRequiredMixin, View):
                 if payment_option == 'S':
                     return redirect('core:payment', payment_option='stripe')
                 elif payment_option == 'P':
-                    return redirect('core:payment', payment_option='paypal')
+                    return redirect('core:janepay', payment_option='janepay')
                 else:
                     messages.warning(
                         self.request, "Invalid payment option selected")
@@ -549,7 +550,7 @@ def remove_single_item_from_cart(request, slug):
 def get_coupon(request, code):
     try:
         coupon = Coupon.objects.get(code=code)
-        return coupon
+        return redirect("core:checkout")
     except ObjectDoesNotExist:
         messages.info(request, "This coupon does not exist")
         return redirect("core:checkout")
@@ -607,6 +608,74 @@ class RequestRefundView(View):
                 return redirect("core:request-refund")
 
 
+class PaystackView(View):
+    def get(self, *args, **kwargs):
+        order = Order.objects.get(user=self.request.user, ordered=False)
+        # order_item = OrderItem.objects.get(user=self.request.user, ordered=False)
+        # name = order.billing_address.name
+        amount = order.get_total()
+        user = self.request.user
+        email = self.request.user.email
+        # order_item = order.item
+        # if order.billing_address:
+        context = {
+            'order': order,
+            'amount': amount,
+            'email': email,
+            # 'name': name,
+            'user': user
+        }
+        return render(self.request, 'paystack.html', context)
+        # else:
+        #     messages.warning(
+        #         self.request, "You have not added billing address")
+        #     return redirect("core:checkout")
+
+
+def paysuccess(request):
+    return render(request, 'paystack-success.html')
+
+
+def terms(request):
+    shopside = ShopbottomBanner.objects.all()[:2]
+    context = {
+        "shopside": shopside
+    }
+    return render(request, 'terms.html', context)
+
+
+def faq(request):
+    shopside = ShopbottomBanner.objects.all()[:2]
+    context = {
+        "shopside": shopside
+    }
+    return render(request, 'faq.html', context)
+
+
+def privacy(request):
+    shopside = ShopbottomBanner.objects.all()[:2]
+    context = {
+        "shopside": shopside
+    }
+    return render(request, 'privacy.html', context)
+
+
+def returns(request):
+    shopside = ShopbottomBanner.objects.all()[:2]
+    context = {
+        "shopside": shopside
+    }
+    return render(request, 'return.html', context)
+
+
+def shippinginfo(request):
+    shopside = ShopbottomBanner.objects.all()[:2]
+    context = {
+        "shopside": shopside
+    }
+    return render(request, 'shippinginfo.html', context)
+
+
 def Search(request):
     if request.GET:
         search_term = request.GET['search_term']
@@ -651,7 +720,33 @@ def AboutView(request):
 
 
 def ContactView(request):
-    return render(request, 'contact.html')
+    form = ContactForm(request.POST or None)
+    if form.is_valid():
+        name = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        subject = form.cleaned_data.get('subject')
+        message = form.cleaned_data.get('message')
+
+        contact = Contact(
+            name=name,
+            email=email,
+            subject=subject,
+            message=message
+        )
+        contact.save()
+        return redirect('core:contact-success')
+    context = {
+        'form': form
+    }
+    return render(request, 'contact.html', context)
+
+
+def ContactSuccess(request):
+    shopside = ShopbottomBanner.objects.all()[:2]
+    context = {
+        "shopside": shopside
+    }
+    return render(request, 'contact-success.html', context)
 
 
 def UserView(request):

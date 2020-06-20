@@ -1,4 +1,6 @@
 from django.urls import path
+
+from . import views
 from .views import (
     ItemDetailView,
     CheckoutView,
@@ -15,7 +17,13 @@ from .views import (
     CategoryView,
     AboutView,
     ContactView,
-    UserView
+    UserView,
+    PaystackView,
+    paysuccess,
+    ContactSuccess,
+    terms,
+    faq,
+    privacy,
 )
 
 app_name = 'core'
@@ -37,6 +45,15 @@ urlpatterns = [
     path('category/<slug>/', CategoryView, name='categoryview'),
     path('about/', AboutView, name='about'),
     path('contact/', ContactView, name='contact'),
-    path('user/',UserView, name='user')
-]
+    path('user/', UserView, name='user'),
+    path('janepay/', PaystackView.as_view(), name='janepay'),
+    path('paystack-success/', views.paysuccess, name='paystack-success'),
+    path('contact-success/', views.ContactSuccess, name='contact-success'),
+    path('terms-and-conditions/', views.terms, name='terms'),
+    path('faq/', views.faq, name='faq'),
+    path('privacy-policy/', views.privacy, name='privacy'),
+    path('returns-and-exchange/', views.returns, name='returns'),
+    path('shipping-info/', views.shippinginfo, name='shippinginfo'),
 
+
+]

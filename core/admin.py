@@ -14,7 +14,8 @@ from .models import (
     HomesideBanner,
     ShoptopBanner,
     ShopbottomBanner,
-    Reviews
+    Reviews,
+    Contact
 )
 
 
@@ -91,6 +92,10 @@ class OrderItemAdmin(admin.ModelAdmin):
     ]
 
 
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ['name', 'time', 'subject']
+
+
 admin.site.register(Item, ItemAdmin)
 admin.site.register(OrderItem, OrderItemAdmin)
 admin.site.register(Order, OrderAdmin)
@@ -105,6 +110,7 @@ admin.site.register(HomesideBanner)
 admin.site.register(ShoptopBanner)
 admin.site.register(ShopbottomBanner)
 admin.site.register(Reviews)
+admin.site.register(Contact, ContactAdmin)
 
 
 admin.site.site_header = "Jane's Admin"
