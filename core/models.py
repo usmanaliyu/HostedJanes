@@ -4,6 +4,10 @@ from django.db import models
 from django.db.models import Sum
 from django.shortcuts import reverse
 from django_countries.fields import CountryField
+from django.contrib.contenttypes.models import ContentType
+from django.urls import reverse
+from taggit.managers import TaggableManager
+from comments . models import Comment
 
 
 CATEGORY_CHOICES = (
@@ -67,6 +71,7 @@ class Item(models.Model):
     slug = models.SlugField()
     description = models.TextField()
     image = models.ImageField()
+    pub_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
@@ -96,6 +101,20 @@ class Item(models.Model):
     @property
     def reviews(self):
         return self.reviews_set.all()
+
+    
+    @property
+    def comments(self):
+        instance = self
+        qs = Comment.objects.filter_by_instance(instance)
+        return qs
+
+    @property
+    def get_content_type(self):
+        instance = self
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        return content_type
+
 
 
 class OrderItem(models.Model):

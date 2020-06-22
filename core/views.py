@@ -9,6 +9,10 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.core.paginator import Paginator
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, ReviewForm, ContactForm
+from comments.forms import CommentForm
+from comments.models import Comment
+from django.contrib.contenttypes.models import ContentType
+
 from .models import (
     Item,
     OrderItem,
@@ -39,11 +43,16 @@ def create_ref_code():
 
 
 def products(request):
-    items = Item.objects.all()
+    items = Item.objects.all().order_by('-pub_date')
     shoptop = ShoptopBanner.objects.all()[:2]
+    
+
+
+    
     context = {
         'items': items,
-        "shoptop": shoptop
+        
+        'shoptop': shoptop
 
     }
     return render(request, "products.html", context)
@@ -368,7 +377,7 @@ class PaymentView(View):
 
 def HomeView(request):
     category_list = Category.objects.all()[:10]
-    object_list = Item.objects.all()[:10]
+    object_list = Item.objects.all().order_by('-pub_date')[:10]
     bag_list = Item.objects.filter(category__name='bag')[:10]
     shoe_list = Item.objects.filter(category__name='shoe')[:10]
     wear_list = Item.objects.filter(category__name='wear')[:10]
@@ -396,7 +405,7 @@ def HomeView(request):
 
 def ShopView(request):
     category_list = Category.objects.all()
-    object_list = Item.objects.all()
+    object_list = Item.objects.all().order_by('-pub_date')
     shoptop = ShoptopBanner.objects.all()[:4]
     shopside = ShopbottomBanner.objects.all()[:2]
     paginator = Paginator(object_list, 25)  # Show 25 contacts per page.
@@ -429,34 +438,56 @@ class OrderSummaryView(LoginRequiredMixin, View):
             return redirect("/")
 
 
-class ItemDetailView(DetailView):
-    model = Item
-    template_name = "product.html"
+def ItemDetailView(request,slug):
+    instance = get_object_or_404(Item,slug=slug)
+    initial_data={
+        'content_type': instance.get_content_type,
+        'object_id': instance.id
+    }
 
-    def post(self, *args, **kwargs):
-        form = ReviewForm(self.request.POST or None)
-        if form.is_valid():
-            user = self.request.user
-            item = self.get_object()
-            review = form.cleaned_data.get('review')
+    form = CommentForm(request.POST or None, initial=initial_data)
+    if form.is_valid():
+        c_type = form.cleaned_data.get('content_type')
+        content_type = ContentType.objects.get(model=c_type)
+        obj_id = form.cleaned_data.get('object_id')
+        content_data = form.cleaned_data.get('content')
+        user_data = form.cleaned_data.get(request.user)
+        
 
-            reviewmode = Reviews(
-                user=user,
-                item=item,
-                review=review
+        parent_obj=None
+        try:
+            parent_id = request.POST.get('parent_id')
+        except:
+            parent_id = None
 
-            )
-            reviewmode.save()
-            return redirect('core:product', slug=item.slug)
-        return redirect('core:product', slug=self.get_object().slug)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            'form': ReviewForm()
-        })
-        return context
+        if parent_id:
+            parent_qs = Comment.objects.filter(id=parent_id)
+            if parent_qs.exists():
+                parent_obj = parent_qs.first()
 
+        new_comment, created = Comment.objects.get_or_create(
+            user = request.user,
+            
+            content_type = content_type,
+            object_id = obj_id,
+            content = content_data,
+
+
+        )
+        messages.success(request,'Comment added successfully!!')
+
+
+    comments = instance.comments
+    context={
+        'instance':instance,
+        'comments': comments,
+        'comment_form':form,
+
+
+    }
+    return render(request,'product.html',context)
+   
 
 @login_required
 def add_to_cart(request, slug):
@@ -681,7 +712,7 @@ def Search(request):
         search_term = request.GET['search_term']
         search_result = Item.objects.filter(
             Q(title__icontains=search_term)
-        )
+        ).order_by('-pub_date')
         context = {
             'search_term': search_term,
             'instance': search_result

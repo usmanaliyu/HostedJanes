@@ -13,7 +13,7 @@ SECRET_KEY = 'lyyn2(19s^2-^frpynybngc=$w97-$d7b1-%n*bd5pheo@#*_*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['52.188.123.44']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # ALLOWED_HOSTS = []
 
@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'django_countries',
     'sorl.thumbnail',
     'core',
-    'paystack'
+    'paystack',
+    'comments',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -52,7 +53,7 @@ ROOT_URLCONF = 'djecommerce.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/home/Jane/janesfashion/janesfinal/templates'],
+        'DIRS': ['/Users/usmanaliyu/Desktop/HostedJanes/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,12 +89,9 @@ WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'myproject',
-        'USER': 'myprojectuser',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+        
     }
 }
 
