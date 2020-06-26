@@ -28,7 +28,8 @@ from .models import (
     ShoptopBanner,
     ShopbottomBanner,
     Reviews,
-    Contact
+    Contact,
+    Slider
 )
 from django.db.models import Q
 
@@ -45,13 +46,10 @@ def create_ref_code():
 def products(request):
     items = Item.objects.all().order_by('-pub_date')
     shoptop = ShoptopBanner.objects.all()[:2]
-    
 
-
-    
     context = {
         'items': items,
-        
+
         'shoptop': shoptop
 
     }
@@ -68,15 +66,19 @@ def is_valid_form(values):
 
 class CheckoutView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
+        shoptop = ShoptopBanner.objects.all()[:2]
         try:
 
             order = Order.objects.get(user=self.request.user, ordered=False)
             form = CheckoutForm()
+
             context = {
                 'form': form,
                 'couponform': CouponForm(),
                 'order': order,
-                'DISPLAY_COUPON_FORM': True
+                'DISPLAY_COUPON_FORM': True,
+                "shoptop": shoptop
+
             }
 
             shipping_address_qs = Address.objects.filter(
@@ -384,6 +386,7 @@ def HomeView(request):
     access_list = Item.objects.filter(category__name='accessories')[:10]
     hometop = HomepageBanner.objects.all()[:2]
     homeside = HomesideBanner.objects.all()[:2]
+    slider = Slider.objects.all()[:1]
     paginator = Paginator(object_list, 20)  # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -396,6 +399,7 @@ def HomeView(request):
         "shoe_list": shoe_list,
         "wear_list": wear_list,
         "access_list": access_list,
+        "slider": slider,
         "hometop": hometop,
         "homeside": homeside
 
@@ -438,9 +442,9 @@ class OrderSummaryView(LoginRequiredMixin, View):
             return redirect("/")
 
 
-def ItemDetailView(request,slug):
-    instance = get_object_or_404(Item,slug=slug)
-    initial_data={
+def ItemDetailView(request, slug):
+    instance = get_object_or_404(Item, slug=slug)
+    initial_data = {
         'content_type': instance.get_content_type,
         'object_id': instance.id
     }
@@ -452,14 +456,12 @@ def ItemDetailView(request,slug):
         obj_id = form.cleaned_data.get('object_id')
         content_data = form.cleaned_data.get('content')
         user_data = form.cleaned_data.get(request.user)
-        
 
-        parent_obj=None
+        parent_obj = None
         try:
             parent_id = request.POST.get('parent_id')
         except:
             parent_id = None
-
 
         if parent_id:
             parent_qs = Comment.objects.filter(id=parent_id)
@@ -467,27 +469,27 @@ def ItemDetailView(request,slug):
                 parent_obj = parent_qs.first()
 
         new_comment, created = Comment.objects.get_or_create(
-            user = request.user,
-            
-            content_type = content_type,
-            object_id = obj_id,
-            content = content_data,
+            user=request.user,
+
+            content_type=content_type,
+            object_id=obj_id,
+            content=content_data,
 
 
         )
-        messages.success(request,'Comment added successfully!!')
-
+        messages.success(
+            request, 'Your review was successfully added. Thank You!!')
 
     comments = instance.comments
-    context={
-        'instance':instance,
+    context = {
+        'instance': instance,
         'comments': comments,
-        'comment_form':form,
+        'comment_form': form,
 
 
     }
-    return render(request,'product.html',context)
-   
+    return render(request, 'product.html', context)
+
 
 @login_required
 def add_to_cart(request, slug):
@@ -648,23 +650,35 @@ class PaystackView(View):
         user = self.request.user
         email = self.request.user.email
         # order_item = order.item
-        # if order.billing_address:
-        context = {
-            'order': order,
-            'amount': amount,
-            'email': email,
-            # 'name': name,
-            'user': user
-        }
-        return render(self.request, 'paystack.html', context)
-        # else:
-        #     messages.warning(
-        #         self.request, "You have not added billing address")
-        #     return redirect("core:checkout")
+        if order.billing_address:
+            context = {
+                'order': order,
+                'amount': amount,
+                'email': email,
+                # 'name': name,
+                'user': user
+            }
+            return render(self.request, 'paystack.html', context)
+        else:
+            messages.warning(
+                self.request, "You have not added billing address")
+            return redirect("core:checkout")
 
 
 def paysuccess(request):
-    return render(request, 'paystack-success.html')
+    shopside = ShopbottomBanner.objects.all()[:2]
+    context = {
+        "shopside": shopside
+    }
+    return render(request, 'paystack-success.html', context)
+
+
+def payfail(request):
+    shopside = ShopbottomBanner.objects.all()[:2]
+    context = {
+        "shopside": shopside
+    }
+    return render(request, 'paystack-failed.html', context)
 
 
 def terms(request):

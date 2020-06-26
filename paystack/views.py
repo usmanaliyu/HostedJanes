@@ -25,9 +25,11 @@ def verify_payment(request, order):
             ref=txrf,
             amount=int(amount) / 100,
             order=order)
-        return redirect(
-            reverse('paystack:successful_verification', args=[order]))
-    return redirect(reverse('paystack:failed_verification', args=[order]))
+        return redirect('core:paystack-success')
+        # return redirect(
+        #     reverse('paystack:successful_verification', args=[order]))
+    # return redirect(reverse('paystack:failed_verification', args=[order]))
+    return redirect('core:paystack-failed')
 
 
 @receiver(payment_verified)
@@ -39,60 +41,63 @@ def on_payment_verified(request, sender, ref, amount, **kwargs):
     # )
     user = request.user
     email = request.user.email
-    name = order.billing_address.name
-    number = order.billing_address.phone
-    address = order.billing_address.street_address
-    state = order.billing_address.state
+    # name = order.billing_address.name
+    # number = order.billing_address.phone
+    # address = order.billing_address.street_address
+    # state = order.billing_address.state
 
     context = {
         'order': order,
         'amount': amount,
         'email': email,
-        'name': name,
+        # 'name': name,
         'user': user,
         'ref': ref,
-        "address": address,
-        'state': state,
-        'number': number
+        # "address": address,
+        # 'state': state,
+        # 'number': number
     }
 
     payment = Payment()
     order.ordered = True
+    order.ref_code = ref
     # order_item.ordered = True
     payment.user = user
     payment.amount = amount
     payment.reference = ref
     payment.save()
     # attach payment to order
+
     order_items = order.items.all()
+
     order_items.update(ordered=True)
     for item in order_items:
         item.save()
+
     order.payment = payment
     order.save()
     # send email to user
-    # template = render_to_string('email_template.html', context)
-    # sale = EmailMessage(
-    #     'Thank you for your order!!',
-    #     template,
-    #     email,
-    #     [email]
+    template = render_to_string('email_template.html', context)
+    sale = EmailMessage(
+        'Thank you for your order!!',
+        template,
+        email,
+        [email]
 
-    # )
-    # sale.fail_silently = False
-    # sale.send()
-    # template = render_to_string('naked_template.html', context)
-    # naked = EmailMessage(
-    #     'We have received an order!!',
-    #     template,
-    #     email,
-    #     ['themajorresources@gmail.com']
+    )
+    sale.fail_silently = False
+    sale.send()
+    template = render_to_string('jane_email.html', context)
+    jane = EmailMessage(
+        'We have received an order!!',
+        template,
+        email,
+        ['janesfash@gmail.com']
 
-    # )
-    # naked.fail_silently = False
-    # naked.send()
-    print(user, sender, amount, ref, amount, number, email, address, state)
-    return redirect('core:paystack-success')
+    )
+    jane.fail_silently = False
+    jane.send()
+    print(user, sender, amount, ref, amount,  email)
 
 
 class FailedView(RedirectView):
@@ -106,14 +111,14 @@ class FailedView(RedirectView):
 
 def success_redirect_view(request, order_id):
     url = settings.PAYSTACK_SUCCESS_URL
-    if url == 'paystack:success_page':
+    if url == 'core:paystack-success':
         url = reverse(url)
     return redirect(url, permanent=True)
 
 
 def failure_redirect_view(request, order_id):
     url = settings.PAYSTACK_FAILED_URL
-    if url == 'paystack:failed_page':
+    if url == 'core:paystack-failed':
         url = reverse(url)
     return redirect(url, permanent=True)
 

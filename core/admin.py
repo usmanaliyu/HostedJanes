@@ -15,7 +15,8 @@ from .models import (
     ShoptopBanner,
     ShopbottomBanner,
     Reviews,
-    Contact
+    Contact,
+    Slider
 )
 
 
@@ -96,10 +97,14 @@ class ContactAdmin(admin.ModelAdmin):
     list_display = ['name', 'time', 'subject']
 
 
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ['reference', 'user', 'amount', "timestamp"]
+
+
 admin.site.register(Item, ItemAdmin)
 admin.site.register(OrderItem, OrderItemAdmin)
 admin.site.register(Order, OrderAdmin)
-admin.site.register(Payment)
+admin.site.register(Payment, PaymentAdmin)
 admin.site.register(Coupon)
 admin.site.register(Refund)
 admin.site.register(Address, AddressAdmin)
@@ -110,6 +115,7 @@ admin.site.register(HomesideBanner)
 admin.site.register(ShoptopBanner)
 admin.site.register(ShopbottomBanner)
 admin.site.register(Reviews)
+admin.site.register(Slider)
 admin.site.register(Contact, ContactAdmin)
 
 

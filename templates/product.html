@@ -3,7 +3,7 @@
 {% block head_title %}
 {% load crispy_forms_tags %}
 {% load humanize %}
-<title> {{ instance.title }} - Jane's Fashion </title>
+<title> {{ instance.title|title }} - Jane's Fashion </title>
 {% endblock %}
 {% block content %}
 
@@ -30,12 +30,7 @@
         <h3>{{ instance.title }}</h3>
         <div class="rating d-flex">
           <p class="text-left mr-4">
-            <a href="#" class="mr-2">5.0</a>
-            <a href="#"><span class="ion-ios-star-outline"></span></a>
-            <a href="#"><span class="ion-ios-star-outline"></span></a>
-            <a href="#"><span class="ion-ios-star-outline"></span></a>
-            <a href="#"><span class="ion-ios-star-outline"></span></a>
-            <a href="#"><span class="ion-ios-star-outline"></span></a>
+
           </p>
           <p class="text-left mr-4">
             <a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
@@ -106,7 +101,7 @@
                 {% for comment in comments  %}
                 <div class="review">
                   <div class="user-img" style="background-image: url({{ instance.image.url }}"></div>
-                  
+
                   <div class="desc">
                     <h4>
                       <span class="text-left">{{comment.user}}</span>
@@ -123,7 +118,7 @@
               <div class="col-md-12">
                 <div class="rating-wrap">
                   <h3 class="mb-4">Give a Review</h3>
-                  
+
 
                   {% if request.user.is_authenticated %}
                   <div class="col-md-12">

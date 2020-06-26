@@ -8,16 +8,15 @@
 
 {% block content %}
 
-
-<div class="hero-wrap js-fullheight" style="background-image: url('{% static 'images/bg_1.jpg' %}');">
+{% for item in slider %}
+<div class="hero-wrap js-fullheight" style="background-image: url('{{item.image.url}}');">
   <div class="overlay"></div>
   <div class="container">
     <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
-      <h3 class="v">Jane's - Time to get dress</h3>
-      <h3 class="vr">Since - 1985</h3>
+
       <div class="col-md-11 ftco-animate text-center">
-        <h1>Le Stylist</h1>
-        <h2><span>Wear Your Dress</span></h2>
+        <h1>{{item.title}}</h1>
+        <h2><span>{{item.text}}</span></h2>
       </div>
       <div class="mouse">
         <a href="#" class="mouse-icon">
@@ -27,7 +26,7 @@
     </div>
   </div>
 </div>
-
+{% endfor %}
 
 
 
@@ -48,12 +47,12 @@
 
       <div class="col-md-12 col-md-6 col-lg-3  d-flex">
         <div class="product">
-          
+
           <a href="{{ item.get_absolute_url }}" class="img-prod"><img class="img-fluid" src="{{ item.image.url }}"
               alt="Colorlib Template">
             <div class="overlay"></div>
           </a>
-          
+
           <div class="text py-3 pb-1 px-3">
             <div class="d-flex">
               <div class="cat">
@@ -62,11 +61,7 @@
               </div>
               <div class="rating">
                 <p class="text-right mb-0">
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
+
                 </p>
               </div>
             </div>
@@ -101,7 +96,7 @@
 
 <section class="ftco-section bg-light">
   <div class="container">
-    <div class="row justify-content-center mb-1 pb-1">
+    <div class="row justify-content-center ">
       <div class="col-md-12 heading-section text-center ">
         <h2 class="mb-1">Our Bags</h2>
         <p>Summer 2020 Collection</p>
@@ -109,13 +104,14 @@
     </div>
   </div>
   <div class="container">
-    <div class="row"> {% for item in  bag_list %}
-      <div class="col-sm-12 col-md-6 col-lg-3 d-flex">
+    <div class="row"> {% for item in bag_list %}
+      <div class="col-sm-12 col-md-6 col-lg-3  d-flex">
 
         <div class="product d-flex flex-column">
-          
-          <a href="{{item.get_absolute_url}}" class="img-prod"><img class="img-fluid" src="{{ item.image.url }}>
-            
+          {%  thumbnail item.image '200x200' crop="center" as jane %}
+          <a href="{{item.get_absolute_url}}" class="img-prod"><img class="img-fluid" src="{{ jane.url }}"
+              alt="Colorlib Template">
+            {% endthumbnail %}
             <div class="overlay"></div>
           </a>
           <div class="text py-3 pb-1 px-3">
@@ -125,11 +121,7 @@
               </div>
               <div class="rating">
                 <p class="text-right mb-0">
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
+
                 </p>
               </div>
             </div>
@@ -151,7 +143,6 @@
     </div>
   </div>
 </section>
-
 
 <section class="ftco-section bg-light">
   <div class="container">
@@ -180,11 +171,7 @@
               </div>
               <div class="rating">
                 <p class="text-right mb-0">
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
+
                 </p>
               </div>
             </div>
@@ -258,11 +245,7 @@
               </div>
               <div class="rating">
                 <p class="text-right mb-0">
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
+
                 </p>
               </div>
             </div>
@@ -311,11 +294,7 @@
               </div>
               <div class="rating">
                 <p class="text-right mb-0">
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
-                  <a href="#"><span class="ion-ios-star-outline"></span></a>
+
                 </p>
               </div>
             </div>

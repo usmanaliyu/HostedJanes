@@ -102,7 +102,6 @@ class Item(models.Model):
     def reviews(self):
         return self.reviews_set.all()
 
-    
     @property
     def comments(self):
         instance = self
@@ -114,7 +113,6 @@ class Item(models.Model):
         instance = self
         content_type = ContentType.objects.get_for_model(instance.__class__)
         return content_type
-
 
 
 class OrderItem(models.Model):
@@ -243,7 +241,8 @@ post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)
 
 
 class Slider(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=20, blank=True, null=True)
+    text = models.CharField(max_length=20, blank=True, null=True)
     image = models.ImageField()
 
     def __str__(self):

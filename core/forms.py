@@ -39,7 +39,7 @@ class CheckoutForm(forms.Form):
 
 
 class CouponForm(forms.Form):
-    code = forms.CharField(widget=forms.TextInput(attrs={
+    code = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'class': 'form-control',
         'placeholder': 'Promo code',
         'aria-label': 'Recipient\'s username',

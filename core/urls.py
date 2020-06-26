@@ -24,6 +24,7 @@ from .views import (
     terms,
     faq,
     privacy,
+    payfail
 )
 
 app_name = 'core'
@@ -48,6 +49,7 @@ urlpatterns = [
     path('user/', UserView, name='user'),
     path('janepay/', PaystackView.as_view(), name='janepay'),
     path('paystack-success/', views.paysuccess, name='paystack-success'),
+    path('paystack-failed/', views.payfail, name='paystack-failed'),
     path('contact-success/', views.ContactSuccess, name='contact-success'),
     path('terms-and-conditions/', views.terms, name='terms'),
     path('faq/', views.faq, name='faq'),

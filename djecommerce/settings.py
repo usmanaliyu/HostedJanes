@@ -13,9 +13,9 @@ SECRET_KEY = 'lyyn2(19s^2-^frpynybngc=$w97-$d7b1-%n*bd5pheo@#*_*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+# ALLOWED_HOSTS = ['127.0.0.1']
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -48,28 +48,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'djecommerce.urls'
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/Users/usmanaliyu/Desktop/HostedJanes/templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
+# paystack
+PAYSTACK_PUBLIC_KEY = "pk_test_74d19b4a40497328ad8c4782bcbbebd434342198"
+PAYSTACK_SECRET_KEY = "sk_test_ab837516266c5182e782fa1b9da20c833e820c89"
+
+ROOT_URLCONF = 'djecommerce.urls'
 
 # TEMPLATES = [
 #     {
 #         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-#         'DIRS': [os.path.join(BASE_DIR, 'templates')],
+#         'DIRS': ['/Users/usmanaliyu/Desktop/HostedJanes/templates'],
 #         'APP_DIRS': True,
 #         'OPTIONS': {
 #             'context_processors': [
@@ -81,30 +70,46 @@ TEMPLATES = [
 #         },
 #     },
 # ]
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
-        
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'janes',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': '',
-#         'PORT': '',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'db.sqlite3',
+
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'janes',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    }
+}
 
 
 # Password validation
@@ -160,6 +165,10 @@ LOGIN_REDIRECT_URL = '/'
 
 # CRISPY FORMS
 
+
+EMAIL_HOST_PASSWORD = 'sogie2020'
+
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 STRIPE_PUBLIC_KEY = ''
 STRIPE_SECRET_KEY = ''
@@ -185,8 +194,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'janesfash@gmail.com'
-EMAIL_HOST_PASSWORD = 'sogie2020'
 
 
-PAYSTACK_PUBLIC_KEY = 'pk_test_6681e7fc29d2350d6f35f98ae14535747f541783',
-PAYSTACK_SECRET_KEY = "sk_test_eb983647781b4cdca3ba3be945637e1585059f71"
+PAYSTACK_SUCCESS_URL = 'paystack-success/'
+PAYSTACK_FAILED_URL = 'paystack-failed/'

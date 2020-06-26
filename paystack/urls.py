@@ -1,3 +1,6 @@
+from . import views
+from . import settings
+from django.views.decorators.csrf import csrf_exempt
 import django
 
 version = django.get_version().split(".")
@@ -6,10 +9,6 @@ if int(version[0]) >= 2:
 else:
     from django.conf.urls import url
 
-from django.views.decorators.csrf import csrf_exempt
-
-from . import settings
-from . import views
 
 urlpatterns = [
     url(
