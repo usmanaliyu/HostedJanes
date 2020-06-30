@@ -16,10 +16,14 @@ CATEGORY_CHOICES = (
     ('OW', 'Outwear')
 )
 
-LABEL_CHOICES = (
-    ('P', 'primary'),
-    ('S', 'secondary'),
-    ('D', 'danger')
+FEATURE_CHOICES = (
+    ('none', 'None'),
+    ('featured_accessories', 'Featured Accessories'),
+    ('featured_bags', 'Featured Bags'),
+    ('featured_clothing', 'Featured Clothing'),
+    ('featured_footwear', 'Featured Footwear'),
+    
+    
 )
 
 ADDRESS_CHOICES = (
@@ -63,11 +67,12 @@ class UserProfile(models.Model):
 class Item(models.Model):
     title = models.CharField(max_length=100)
     price = models.FloatField()
-    featured = models.BooleanField(default=False, blank=True, null=True)
+    new_arrival = models.BooleanField(default=False, blank=True, null=True)
     discount_price = models.FloatField(blank=True, null=True)
+    discount_percent = models.FloatField(blank=True)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, default=1,)
-    label = models.CharField(choices=LABEL_CHOICES, max_length=1)
+    label = models.CharField(choices=FEATURE_CHOICES,max_length=1000)
     slug = models.SlugField()
     description = models.TextField()
     image = models.ImageField()

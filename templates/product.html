@@ -19,26 +19,71 @@
   </div>
 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 <section class="ftco-section">
   <div class="container">
     <div class="row">
+
+
       <div class="col-lg-6 mb-5 ftco-animate">
-        <a href="{{ instance.image.url }}" class="image-popup prod-img-bg"><img src="{{ instance.image.url }}"
-            class="img-fluid" alt="{{instance.title}}"></a>
+
+
+
+
+
+        <div class="row s_product_inner ">
+          <div class="col-lg-11">
+            <div class="product_slider_img">
+              <div id="vertical">
+                <div  data-thumb="{{ instance.image.url }}">
+                  <img src="{{ instance.image.url }}" class="img-fluid" alt="{{instance.title}}"/>
+                </div>
+                <div data-thumb="{{ instance.image.url }}">
+                  <img src="{{ instance.image.url }}" class="img-fluid" alt="{{instance.title}}"/>
+                </div>
+                <div data-thumb="{{ instance.image.url }}">
+                  <img src="{{ instance.image.url }}" class="img-fluid" alt="{{instance.title}}"/>
+                </div>
+                <div data-thumb="{{ instance.image.url }}">
+                  <img src="{{ instance.image.url }}"class="img-fluid" alt="{{instance.title}}" />
+                </div>         
+          </div>     
+        </div>
+        </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
       </div>
+
+
+
+
+
+
+
       <div class="col-lg-6 product-details pl-md-5 ftco-animate">
         <h3>{{ instance.title }}</h3>
-        <div class="rating d-flex">
-          <p class="text-left mr-4">
-
-          </p>
-          <p class="text-left mr-4">
-            <a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
-          </p>
-          <p class="text-left">
-            <a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
-          </p>
-        </div>
+        
 
         <p class="price">
           <h4><del>&#8358; {{ instance.discount_price|intcomma }}</del></h4>
@@ -62,14 +107,11 @@
               </div>
             </div>
           </div>
-          <div class="w-100"></div>
+          
 
 
 
-          <div class="w-100"></div>
-          <div class="col-md-12">
-            <p style="color: #000;">80 piece available</p>
-          </div>
+          
         </div>
         <p><a href="{{ instance.get_add_to_cart_url }}" class="btn btn-black py-3 px-5 mr-2">Add to Cart</a></p>
       </div>
@@ -211,6 +253,16 @@
 
   });
 </script>
+
+
+<script src="{% static 'js/slider/jquery-1.12.1.min.js' %}"></script>
+  <script src="{% static 'js/slider/jquery.magnific-popup.js' %}"></script>
+  <script src="{% static 'js/slider/lightslider.min.js' %}"></script>
+  <script src="{% static 'js/slider/lightslider.min.js' %}"></script>
+  <script src="{% static 'js/slider/slick.min.js' %}"></script>
+  <script src="{% static 'js/slider/jquery.counterup.min.js' %}"></script>
+  <script src="{% static 'js/slider/jquery.ajaxchimp.min.js' %}"></script>
+<script src="{% static 'js/slider/custom.js' %}"></script>
 {% endblock %}
 
 {% endblock content %}
