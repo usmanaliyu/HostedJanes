@@ -22,8 +22,8 @@ FEATURE_CHOICES = (
     ('featured_bags', 'Featured Bags'),
     ('featured_clothing', 'Featured Clothing'),
     ('featured_footwear', 'Featured Footwear'),
-    
-    
+
+
 )
 
 ADDRESS_CHOICES = (
@@ -69,13 +69,18 @@ class Item(models.Model):
     price = models.FloatField()
     new_arrival = models.BooleanField(default=False, blank=True, null=True)
     discount_price = models.FloatField(blank=True, null=True)
-    discount_percent = models.FloatField(blank=True)
+    discount_percent = models.FloatField(blank=True,  null=True)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, default=1,)
-    label = models.CharField(choices=FEATURE_CHOICES,max_length=1000)
+    label = models.CharField(choices=FEATURE_CHOICES, max_length=1000)
     slug = models.SlugField()
     description = models.TextField()
     image = models.ImageField()
+    image_1 = models.ImageField(blank=True,  null=True)
+    image_2 = models.ImageField(blank=True,  null=True)
+    image_3 = models.ImageField(blank=True,  null=True)
+    image_4 = models.ImageField(blank=True,  null=True)
+
     pub_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

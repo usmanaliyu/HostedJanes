@@ -171,7 +171,7 @@ class CheckoutView(View):
                     order.save()
 
                 elif use_default_billing:
-                    print("Using the defualt billing address")
+                    print("Using the default billing address")
                     address_qs = Address.objects.filter(
                         user=self.request.user,
                         address_type='B',
@@ -219,11 +219,8 @@ class CheckoutView(View):
                         messages.info(
                             self.request, "Please fill in the required billing address fields")
 
-                
+                return redirect('core:janepay')
 
-                
-                return redirect('core:payment', payment_option='Instant card Payment')
-                
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an active order")
             return redirect("core:order-summary")

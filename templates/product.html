@@ -13,7 +13,7 @@
       <div class="col-md-9 ftco-animate text-center">
         <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'core:home' %}" class="text-white">Janes</a></span>'s
           <span class="mr-2"><a href="{% url 'core:shop' %}" class="text-white">Fashion</a></span></p>
-        <h1 class="mb-5 text-white bread mt-3">{{ instance.title }}</h1>
+        <h1 class="mb-5 text-white bread mt-3">{{ instance.title|title }}</h1>
       </div>
     </div>
   </div>
@@ -37,7 +37,7 @@
     <div class="row">
 
 
-      <div class="col-lg-6 mb-5 ftco-animate">
+      <div class="col-lg-6 mb-5">
 
 
 
@@ -47,21 +47,29 @@
           <div class="col-lg-11">
             <div class="product_slider_img">
               <div id="vertical">
-                <div  data-thumb="{{ instance.image.url }}">
-                  <img src="{{ instance.image.url }}" class="img-fluid" alt="{{instance.title}}"/>
-                </div>
+                {%if instance.image %}
                 <div data-thumb="{{ instance.image.url }}">
-                  <img src="{{ instance.image.url }}" class="img-fluid" alt="{{instance.title}}"/>
+                  <img src="{{ instance.image.url }}" class="img-fluid" alt="{{instance.title}}" />
                 </div>
-                <div data-thumb="{{ instance.image.url }}">
-                  <img src="{{ instance.image.url }}" class="img-fluid" alt="{{instance.title}}"/>
+                {% endif %}
+                {%if instance.image_1 %}
+                <div data-thumb="{{ instance.image_1.url }}">
+                  <img src="{{ instance.image_1.url }}" class="img-fluid" alt="{{instance.title}}" />
                 </div>
-                <div data-thumb="{{ instance.image.url }}">
-                  <img src="{{ instance.image.url }}"class="img-fluid" alt="{{instance.title}}" />
-                </div>         
-          </div>     
-        </div>
-        </div>
+                {% endif %}
+                {%if instance.image_1 %}
+                <div data-thumb="{{ instance.image_2.url }}">
+                  <img src="{{ instance.image_2.url }}" class="img-fluid" alt="{{instance.title}}" />
+                </div>
+                {% endif %}
+                {%if instance.image_1 %}
+                <div data-thumb="{{ instance.image_3.url }}">
+                  <img src="{{ instance.image_3.url }}" class="img-fluid" alt="{{instance.title}}" />
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
         </div>
 
 
@@ -83,7 +91,7 @@
 
       <div class="col-lg-6 product-details pl-md-5 ftco-animate">
         <h3>{{ instance.title }}</h3>
-        
+
 
         <p class="price">
           <h4><del>&#8358; {{ instance.discount_price|intcomma }}</del></h4>
@@ -107,11 +115,11 @@
               </div>
             </div>
           </div>
-          
 
 
 
-          
+
+
         </div>
         <p><a href="{{ instance.get_add_to_cart_url }}" class="btn btn-black py-3 px-5 mr-2">Add to Cart</a></p>
       </div>
@@ -146,11 +154,11 @@
 
                   <div class="desc">
                     <h4>
-                      <span class="text-left">{{comment.user}}</span>
+                      <span class="text-left">{{comment.user|title}}</span>
                       <span class="text-right">{{comment.timestamp|timesince}} ago</span>
                     </h4>
 
-                    <p>{{comment.content}}</p>
+                    <p>{{comment.content|title}}</p>
                   </div>
                   {% endfor %}
                 </div>
@@ -256,12 +264,12 @@
 
 
 <script src="{% static 'js/slider/jquery-1.12.1.min.js' %}"></script>
-  <script src="{% static 'js/slider/jquery.magnific-popup.js' %}"></script>
-  <script src="{% static 'js/slider/lightslider.min.js' %}"></script>
-  <script src="{% static 'js/slider/lightslider.min.js' %}"></script>
-  <script src="{% static 'js/slider/slick.min.js' %}"></script>
-  <script src="{% static 'js/slider/jquery.counterup.min.js' %}"></script>
-  <script src="{% static 'js/slider/jquery.ajaxchimp.min.js' %}"></script>
+<script src="{% static 'js/slider/jquery.magnific-popup.js' %}"></script>
+<script src="{% static 'js/slider/lightslider.min.js' %}"></script>
+<script src="{% static 'js/slider/lightslider.min.js' %}"></script>
+<script src="{% static 'js/slider/slick.min.js' %}"></script>
+<script src="{% static 'js/slider/jquery.counterup.min.js' %}"></script>
+<script src="{% static 'js/slider/jquery.ajaxchimp.min.js' %}"></script>
 <script src="{% static 'js/slider/custom.js' %}"></script>
 {% endblock %}
 

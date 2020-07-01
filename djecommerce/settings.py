@@ -13,9 +13,9 @@ SECRET_KEY = 'lyyn2(19s^2-^frpynybngc=$w97-$d7b1-%n*bd5pheo@#*_*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '52.188.123.44']
+# ALLOWED_HOSTS = ['127.0.0.1', '52.188.123.44']
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -50,9 +50,11 @@ MIDDLEWARE = [
 
 
 # paystack
-PAYSTACK_PUBLIC_KEY = "pk_test_74d19b4a40497328ad8c4782bcbbebd434342198"
-PAYSTACK_SECRET_KEY = "sk_test_ab837516266c5182e782fa1b9da20c833e820c89"
+# PAYSTACK_PUBLIC_KEY = "pk_live_3b7b32232d4485c95cdc0c50f83acda3b6f523b1"
+# PAYSTACK_SECRET_KEY = "sk_live_1c2a919aca68e2a4fb2369cd828972d801a29d80"
 
+PAYSTACK_PUBLIC_KEY = "pk_test_6681e7fc29d2350d6f35f98ae14535747f541783"
+PAYSTACK_SECRET_KEY = "sk_test_eb983647781b4cdca3ba3be945637e1585059f71"
 ROOT_URLCONF = 'djecommerce.urls'
 
 TEMPLATES = [
@@ -93,13 +95,36 @@ WSGI_APPLICATION = 'djecommerce.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 
+# DATABASES = {
+#      'default': {
+#          'ENGINE': 'django.db.backends.sqlite3',
+#          'NAME': 'db.sqlite3',
+
+#      }
+#  }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'janes',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': '',
+#         'PORT': '',
+#     }
+# }
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'myproject',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
