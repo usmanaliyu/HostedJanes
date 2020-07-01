@@ -64,21 +64,16 @@ def is_valid_form(values):
     return valid
 
 
-class CheckoutView(LoginRequiredMixin, View):
+class CheckoutView(View):
     def get(self, *args, **kwargs):
-        shoptop = ShoptopBanner.objects.all()[:2]
         try:
-
             order = Order.objects.get(user=self.request.user, ordered=False)
             form = CheckoutForm()
-
             context = {
                 'form': form,
                 'couponform': CouponForm(),
                 'order': order,
-                'DISPLAY_COUPON_FORM': True,
-                "shoptop": shoptop
-
+                'DISPLAY_COUPON_FORM': True
             }
 
             shipping_address_qs = Address.objects.filter(
@@ -176,7 +171,7 @@ class CheckoutView(LoginRequiredMixin, View):
                     order.save()
 
                 elif use_default_billing:
-                    print("Using the default billing address")
+                    print("Using the defualt billing address")
                     address_qs = Address.objects.filter(
                         user=self.request.user,
                         address_type='B',
@@ -224,16 +219,11 @@ class CheckoutView(LoginRequiredMixin, View):
                         messages.info(
                             self.request, "Please fill in the required billing address fields")
 
-                payment_option = form.cleaned_data.get('payment_option')
+                
 
-                if payment_option == 'S':
-                    return redirect('core:payment', payment_option='stripe')
-                elif payment_option == 'P':
-                    return redirect('core:janepay', payment_option='janepay')
-                else:
-                    messages.warning(
-                        self.request, "Invalid payment option selected")
-                    return redirect('core:checkout')
+                
+                return redirect('core:payment', payment_option='Instant card Payment')
+                
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an active order")
             return redirect("core:order-summary")

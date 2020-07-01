@@ -95,24 +95,11 @@ WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
 
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.sqlite3',
-         'NAME': 'db.sqlite3',
-
-     }
- }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'janes',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': '',
-#         'PORT': '',
-#     }
-# }
-
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
