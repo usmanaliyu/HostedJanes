@@ -13,9 +13,9 @@ SECRET_KEY = 'lyyn2(19s^2-^frpynybngc=$w97-$d7b1-%n*bd5pheo@#*_*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['127.0.0.1', '52.188.123.44']
+ALLOWED_HOSTS = ['127.0.0.1', '52.188.123.44']
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -96,12 +96,12 @@ WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
 
 # DATABASES = {
-#      'default': {
-#          'ENGINE': 'django.db.backends.sqlite3',
-#          'NAME': 'db.sqlite3',
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'db.sqlite3',
 
-#      }
-#  }
+#     }
+# }
 
 # DATABASES = {
 #     'default': {

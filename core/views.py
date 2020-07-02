@@ -373,6 +373,7 @@ def HomeView(request):
     access_list = Item.objects.filter(category__name='accessories')[:10]
     hometop = HomepageBanner.objects.all()[:2]
     homeside = HomesideBanner.objects.all()[:2]
+    shoptop = ShoptopBanner.objects.all()[:4]
     slider = Slider.objects.all()[:1]
     paginator = Paginator(object_list, 20)  # Show 25 contacts per page.
     page_number = request.GET.get('page')
@@ -385,6 +386,7 @@ def HomeView(request):
         'bag_list': bag_list,
         "shoe_list": shoe_list,
         "wear_list": wear_list,
+        "shoptop": shoptop,
         "access_list": access_list,
         "slider": slider,
         "hometop": hometop,

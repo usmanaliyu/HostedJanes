@@ -7,8 +7,8 @@
 {% load thumbnail %}
 {% block content %}
 
-<div class="hero-wrap hero-bread"
-    style="background-image: url({% static 'images/shopbg.jpg' %}); background-attachment:fixed;">
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'images/shopbg.jpg' %}); background-position: center center; background-size:
+    cover; width: 100%;">
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 text-white text-center">
@@ -95,7 +95,7 @@
                                 </div>
                                 <p class="bottom-area d-flex px-3">
                                     <a href="{{ item.get_add_to_cart_url }}"
-                                        class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
+                                        class="add-to-cart text-center btn-primary btn mr-1"><span>Add to cart <i
                                                 class="ion-ios-add ml-1"></i></span></a>
 
                                 </p>

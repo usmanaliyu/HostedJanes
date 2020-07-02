@@ -10,7 +10,7 @@
 <div class="hero-wrap hero-bread" style="background-image: url({{ instance.image.url }});">
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-center">
-      <div class="col-md-9 ftco-animate text-center">
+      <div class="col-md-9 text-center">
         <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'core:home' %}" class="text-white">Janes</a></span>'s
           <span class="mr-2"><a href="{% url 'core:shop' %}" class="text-white">Fashion</a></span></p>
         <h1 class="mb-5 text-white bread mt-3">{{ instance.title|title }}</h1>
@@ -89,30 +89,25 @@
 
 
 
-      <div class="col-lg-6 product-details pl-md-5 ftco-animate">
-        <h3>{{ instance.title }}</h3>
+      <div class="col-lg-6 product-details pl-md-5 ">
+        <h3>{{ instance.title|title }}</h3>
 
-
+        <hr>
         <p class="price">
-          <h4><del>&#8358; {{ instance.discount_price|intcomma }}</del></h4>
-        </p>
-        <p class="price">
+          <small><del>&#8358; {{ instance.discount_price|intcomma }}</del></small>
+          <br>
           <h4>&#8358; {{ instance.price|intcomma }}</h4>
         </p>
-        <p>{{ instance.description }}
-        </p>
+
+        <div class="card">
+          <div class="card-body">
+            <p>{{ instance.description|truncatechars:15 }}</p>
+          </div>
+        </div>
         <div class="row mt-4">
           <div class="col-md-6">
             <div class="form-group d-flex">
-              <div class="select-wrap">
-                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                <select name="" id="" class="form-control">
-                  <option value="">Small</option>
-                  <option value="">Medium</option>
-                  <option value="">Large</option>
-                  <option value="">Extra Large</option>
-                </select>
-              </div>
+
             </div>
           </div>
 
@@ -121,7 +116,9 @@
 
 
         </div>
-        <p><a href="{{ instance.get_add_to_cart_url }}" class="btn btn-black py-3 px-5 mr-2">Add to Cart</a></p>
+        <p><a href="{{ instance.get_add_to_cart_url }}" class="btn btn-primary btn-block mr-2"> <span
+              class="text-white icon-shopping_cart"></span> Add to Cart</a></p>
+        <hr>
       </div>
     </div>
 
@@ -129,10 +126,29 @@
 
 
     <div class="row mt-5">
-      <div class="col-md-12 nav-link-wrap">
+      <!-- <div class="col-md-12 nav-link-wrap">
         <div class="nav nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-          <a class="nav-link active mr-lg-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab"
+          <a class="nav-link active" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab"
+            aria-controls="v-pills-3" aria-selected="false">Product Description</a>
+          <a class="nav-link  mr-lg-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab"
             aria-controls="v-pills-1" aria-selected="true">Reviews</a>
+          <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab"
+            aria-controls="v-pills-2" aria-selected="false">Delivery & Returns </a>
+
+        </div>
+      </div> -->
+      <div class="col-md-12 nav-link-wrap">
+
+        <div class="nav nav-pills d-flex text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <a class="nav-link active" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab"
+            aria-controls="v-pills-3" aria-selected="false">Product Description</a> <a class="nav-link  mr-lg-1"
+            id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1"
+            aria-selected="true">Reviews</a>
+
+          <a class="nav-link  mr-lg-1" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab"
+            aria-controls="v-pills-2" aria-selected="false">Delivery & Returns</a>
+
+
 
         </div>
       </div>
@@ -140,14 +156,14 @@
 
         <div class="tab-content bg-light" id="v-pills-tabContent">
 
-          <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel"
-            aria-labelledby="day-1-tab v-pills-day-3-tab">
+          <div class="tab-pane fade" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab v-pills-day-1-tab">
 
 
-            <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-day-3-tab"></div>
+            <div class="tab-pane fade" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-day-1-tab"></div>
             <div class="row p-4">
               <div class="col-md-6">
-                <h3 class="mb-1">{{comments.count}} Review{{comments.count|pluralize}}</h3>
+                <h3 class="mb-1">{{comments.count}} Review{{comments.count|pluralize}} for {{instance.title|title}}
+                </h3>
                 {% for comment in comments  %}
                 <div class="review">
                   <div class="user-img" style="background-image: url({{ instance.image.url }}"></div>
@@ -180,7 +196,7 @@
                           {{comment_form|crispy}}
                         </div>
                         <div class="form-group">
-                          <input type="submit" value="Add Review" class="btn btn-primary py-3 px-5">
+                          <input type="submit" value="Add Review" class="btn btn-primary py-3 px-3">
                         </div>
                       </form>
 
@@ -196,7 +212,34 @@
               </div>
             </div>
           </div>
+          <div class="tab-pane fade show active" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-day-3-tab">
+            <div class="p-4">
+
+              <div class="card">
+
+                <div class="card-body">
+                  <h3 class="mb-4">{{instance.title|title}}</h3>
+                  <p>{{ instance.description}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-day-2-tab">
+            <div class="card">
+
+              <div class="card-body">
+
+                <h4>Delivery Information</h4>
+                <p>
+                  Normally delivered between 7-21 days. </p>
+                <h4>Return Policy</h4>
+                <p>
+                  Free return within 15 days for Jumia Mall items and 7 days for other eligible items</p>
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
 </section>
