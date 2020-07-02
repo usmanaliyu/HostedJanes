@@ -90,7 +90,7 @@
 
 
       <div class="col-lg-6 product-details pl-md-5 ">
-        <h3>{{ instance.title|title }}</h3>
+        <h2 class="font-weight-bold">{{ instance.title|title }}</h2>
 
         <hr>
         <p class="price">
@@ -137,11 +137,12 @@
 
         </div>
       </div> -->
-      <div class="col-md-12 nav-link-wrap">
+      <div class="col-md-12 mx-auto nav-link-wrap">
 
         <div class="nav nav-pills d-flex text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-          <a class="nav-link active" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab"
-            aria-controls="v-pills-3" aria-selected="false">Product Description</a> <a class="nav-link  mr-lg-1"
+          <a class="nav-link active " id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab"
+            aria-controls="v-pills-3" aria-selected="false">Product Description</a> 
+            <a class="nav-link "
             id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1"
             aria-selected="true">Reviews</a>
 
@@ -166,7 +167,7 @@
                 </h3>
                 {% for comment in comments  %}
                 <div class="review">
-                  <div class="user-img" style="background-image: url({{ instance.image.url }}"></div>
+                  <div class="user-img" style="background-image:url({{ instance.image.url }}"></div>
 
                   <div class="desc">
                     <h4>
@@ -218,7 +219,7 @@
               <div class="card">
 
                 <div class="card-body">
-                  <h3 class="mb-4">{{instance.title|title}}</h3>
+                  <h3 class="mb-4 font-weight-bold">{{instance.title|title}}</h3>
                   <p>{{ instance.description}}</p>
                 </div>
               </div>
@@ -234,7 +235,7 @@
                   Normally delivered between 7-21 days. </p>
                 <h4>Return Policy</h4>
                 <p>
-                  Free return within 15 days for Jumia Mall items and 7 days for other eligible items</p>
+                  Free return within 15 days</p>
               </div>
             </div>
           </div>

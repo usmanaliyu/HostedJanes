@@ -9,7 +9,7 @@
 {% block content %}
 
 {% for item in slider %}
-<div class="hero-wrap js-fullheight"
+<div class="hero-wrap js-fullheight mb-4"
   style="background-image: url('{{item.image.url}}'); background-position: center center; background-size: cover; width: 100%;">
   <div class="overlay"></div>
   <div class="container">
@@ -18,7 +18,7 @@
       <div class="col-md-11 text-center">
         <h1>{{item.title}}</h1>
         <h2><span>{{item.text}}</span></h2>
-        <a href="{% url 'core:shop' %}" class=" mt-4 btn btn-primary">
+        <a href="{% url 'core:shop' %}" class=" mt-4 mb-4 btn btn-primary">
           Shop Now
         </a>
       </div>
@@ -35,29 +35,30 @@
   <div class="container">
     <div class="row">
 
-      <div class="col-md-3">
+      <div class="col-lg-3 col-md-4 col-6 col-6 mt-2">
         <div class="card">
           <div class="card-body">
-
-            <div class="icon"></div> Lorem ipsum dolor
+<img  class="img-holder" alt="Image placeholder" src="{% static 'images/call.png' %}">
+            Lorem ipsum dolor 1
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-lg-3 col-md-4 col-6 col-6 mt-2">
         <div class="card">
           <div class="card-body">
-            Lorem ipsum dolor
+         <img  class="img-holder" alt="Image placeholder" src="{% static 'images/list.png' %}">
+            Lorem ipsum dolor 2
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-lg-3 col-md-4 col-6 col-6 mt-2">
         <div class="card">
-          <div class="card-body"> Lorem ipsum dolor</div>
+          <div class="card-body"> <img  class="img-holder" alt="Image placeholder" src="{% static 'images/bell.png' %}"> Lorem ipsum dolor 3</div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-lg-3 col-md-4 col-6 col-6 mt-2">
         <div class="card">
-          <div class="card-body"> Lorem ipsum dolor</div>
+          <div class="card-body"><img  class="img-holder" alt="Image placeholder" src="{% static 'images/online.png' %}"> Lorem ipsum dolor 4</div>
         </div>
       </div>
 
